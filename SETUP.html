@@ -1,0 +1,50 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#101115"><title>FUSE PREP · Beginner setup guide</title><style>
+:root{font-family:Inter,-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif;color:#f3f4f5;background:#101115}body{margin:auto;padding:28px 20px 80px;max-width:780px;line-height:1.7}h1{font-size:38px;letter-spacing:-.05em;line-height:1.1}h1 span,a{color:#dcf28c}h2{font-size:23px;margin:35px 0 8px}h3{font-size:15px;margin:20px 0 4px}p,li{color:#d0d3d9}strong{color:#fff}code{background:#282c32;padding:3px 6px;border-radius:4px;color:#dcf28c;overflow-wrap:anywhere}.step{border:1px solid #323842;border-radius:10px;background:#1b1e24;padding:16px 20px;margin:13px 0}.warning{border-left:4px solid #dcf28c;background:#2a2d23;padding:12px 16px;margin:16px 0}a{word-break:break-word}ol{padding-left:24px}li{margin:8px 0}img{max-width:100%}small{color:#9fa5ae}hr{border:0;border-top:1px solid #30353d;margin:36px 0}</style></head><body>
+<p><a href="./index.html">← Back to Fuse Prep</a></p><p style="color:#dcf28c;letter-spacing:.2em;font-size:11px;font-weight:800">FREE SETUP / NO CODE REQUIRED</p>
+<h1>Install <span>FUSE PREP</span><br>on your phone & Mac.</h1>
+<p>Start locally with no account. To make photos show up in Whatnot CSV exports and keep your inventory synced across devices, set up a free web address and free Supabase account.</p>
+<div class="step"><h2>Option A — Try it now (no accounts)</h2><ol>
+<li>Open <strong>index.html</strong> through a local web server, or open the included separate <strong>FusePrep-Open-Now.html</strong> to try it on Mac without setup.</li>
+<li>Type in listing titles, prices, and sizes; import your photos.</li><li>Your edits save on this device. You can download a <strong>backup JSON</strong> anytime.</li>
+</ol><p><strong>Limits:</strong> Locally saved photos are not publicly hosted. Other devices will not see them, and Whatnot can't read their bytes from a CSV.</p></div>
+<div class="step"><h2>Option B — Make the app installable (free GitHub Pages)</h2><ol>
+<li>Visit <a href="https://github.com/signup" target="_blank">github.com/signup</a> and create a free account, if you don't have one.</li>
+<li>Go to <a href="https://github.com/new" target="_blank">github.com/new</a>. Repository name: <code>fuse-prep</code>. Select <strong>Public</strong>. Click <strong>Create repository</strong>.</li>
+<li>In the new repository choose <strong>uploading an existing file</strong> (or <strong>Add file → Upload files</strong>). Unzip the Fuse Prep package. Upload <strong>all app files in the fuse-prep-app folder</strong> into the root of your repository. Include <code>index.html</code>, <code>app.js</code>, <code>core.mjs</code>, <code>sw.js</code>, <code>styles.css</code>, <code>SETUP.html</code>, <code>manifest.webmanifest</code>, and the icon files. You don't need to upload <code>supabase-setup.sql</code> or <code>README.md</code>, but you can.</li>
+<li>Click <strong>Commit changes</strong>.</li>
+<li>Open your repository <strong>Settings → Pages</strong>. Under <strong>Build and deployment</strong>, select <strong>Deploy from a branch</strong>; set branch to <strong>main</strong> and folder to <strong>/(root)</strong>. Click <strong>Save</strong>.</li>
+<li>GitHub gives you an address like <code>https://YOURUSERNAME.github.io/fuse-prep/</code>. Open that URL on your Mac and phone.</li>
+</ol><p>You now have your own online app. <strong>GitHub Pages itself does not sync your inventory or upload photos</strong>; follow the next step for that.</p></div>
+<div class="step"><h2>Option C — Turn on free photo hosting + sync (Supabase)</h2><ol>
+<li>Visit <a href="https://supabase.com/dashboard" target="_blank">supabase.com/dashboard</a> and create a free account.</li>
+<li>Click <strong>New project</strong>; choose your organization, name it <strong>Fuse Prep</strong>, choose a strong database password, and choose the <strong>Free</strong> plan.</li>
+<li>In Supabase open <strong>SQL Editor → New query</strong>.</li>
+<li>Open the included file <strong>supabase-setup.sql</strong> in TextEdit on your Mac. Copy all the contents into SQL Editor. Click <strong>Run</strong>. That creates your private workspace table and a public-read photo bucket where only signed-in users can upload into their own folders.</li>
+<li>In Supabase, find your project's <strong>Project URL</strong> and its <strong>publishable (or legacy anon) key</strong> under <strong>Project Settings → API</strong> or <strong>Connect</strong> (the dashboard label may change).</li>
+<li>Go back to your hosted Fuse Prep app and click <strong>☁ Cloud sync</strong>.</li>
+<li>Open <strong>1. Add Supabase project connection</strong>. Paste the Project URL and publishable key. Click <strong>Save connection</strong>.</li>
+<li>Type your email and a password, then click <strong>Create account</strong>. If Supabase asks you to confirm your email, do so, then click <strong>Sign in</strong>.</li>
+<li>Import photos. They are compressed before upload to reduce storage use. Tap <strong>Upload photos</strong> if automatic upload hasn't completed. The app adds the resulting public <code>https://</code> links to your CSV.</li>
+<li>On your second device, visit your GitHub Pages Fuse Prep address. Enter the <strong>same Project URL and publishable key</strong>, then sign in with the <strong>same email and password</strong>. Choose to load cloud data when prompted.</li>
+</ol>
+<div class="warning"><strong>Security:</strong> Only use the <em>publishable</em> or <em>anon</em> key in the app. <strong>Never use a service_role or secret key.</strong> Public photo links can be viewed by anyone who has them; this is necessary for Whatnot.</div>
+</div>
+<div class="step"><h2>Install it like an app</h2><h3>iPhone</h3><ol><li>Open your GitHub Pages URL in <strong>Safari</strong>.</li><li>Tap the <strong>Share</strong> icon.</li><li>Scroll down and tap <strong>Add to Home Screen</strong> (or choose it under share options), then <strong>Add</strong>.</li></ol>
+<h3>Mac</h3><ol><li>Open your GitHub Pages URL in <strong>Chrome</strong>.</li><li>Use the <strong>Install</strong> button when shown, or Chrome's <strong>Save and share → Install page as app</strong> option (wording may vary).</li></ol></div>
+<div class="step"><h2>How to prep 100 shirts quickly</h2><ol>
+<li>Set your batch price and press <strong>PRICE ALL</strong>.</li>
+<li>Enter Whatnot's exact Category, Sub Category, and Shipping Profile. Type <strong>Auction</strong> is preset.</li>
+<li>Type each title and tap a size button. It appends the size to the title and adds <code>SIZE: XL</code> (or the selected size) to the description.</li>
+<li>Use <strong>+ Add photos</strong> to select 100–300 photos in a batch.</li>
+<li>Set <strong>Photos per listing</strong> to 1, 2, or 3, depending how you photographed the shirts, and press <strong>Assign photos in order</strong>. Fix any exceptions by dragging or tapping.</li>
+<li>For CSV image links, wait until the photos are uploaded to your free cloud project.</li>
+<li>Click <strong>Export CSV</strong>. Fix any flagged missing required fields. You can deliberately exclude unhosted photos and import draft listings without images.</li>
+<li>From a <strong>computer</strong>, visit <a href="https://www.whatnot.com" target="_blank">whatnot.com</a> → Seller Hub → Inventory → Import from CSV. Choose the exported file. Whatnot will create inventory drafts.</li>
+</ol></div>
+<hr><h2>Important limitations</h2>
+<p><strong>Free-tier quotas:</strong> Supabase's free plan currently includes 1 GB object storage and 500 MB database storage, with 5 GB egress allowances and pausing after one week of inactivity. Your workload may exceed these caps; free forever is not guaranteed. This app never asks for a paid subscription, and it cannot raise those limits. Compressing photos reduces usage.</p>
+<p><strong>CSV compliance:</strong> Fuse Prep exports the exact column names and order from the template you uploaded. The <em>valid category, subcategory, shipping, type, and condition values</em> still need to be copied from Whatnot's official <strong>Values</strong> sheet, which wasn't included in your CSV upload. Test with 1–2 items before importing 100.</p>
+<p><strong>Cloud conflicts:</strong> If two devices edit the same workspace simultaneously, the last cloud save can overwrite the other. Work on one device at a time, sync, and use JSON backups.</p>
+<p><strong>Photo backups:</strong> The JSON backup includes descriptions, slot assignments, and hosted URL references; it does not embed the original photo bytes. Photos saved only locally live in your browser's IndexedDB, and browser data clearing can delete them. Keep your original camera photos too.</p>
+<p><strong>CSV imports:</strong> Every Whatnot CSV import creates new drafts rather than updating existing drafts. Avoid repeatedly importing the same file unless you intend duplicates.</p>
+<p><a href="./index.html">← Open Fuse Prep</a></p></body></html>

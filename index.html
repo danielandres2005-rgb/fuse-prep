@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#101115"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="description" content="FUSE Prep: free Whatnot CSV inventory and photo workflow for vintage sellers.">
+<link rel="manifest" href="./manifest.webmanifest"><link rel="icon" href="./icon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="./icon-apple.png">
+<link rel="stylesheet" href="./styles.css"><title>Fuse Prep · Whatnot inventory studio</title>
+</head>
+<body>
+<header class="site-header">
+  <div class="head-inner"><div class="brand"><div class="mark">F</div><div><strong>FUSE <span>PREP</span></strong><small>WHATNOT INVENTORY STUDIO</small></div></div>
+  <div class="head-tools"><span id="saveBadge" class="save-badge"><span class="pulse"></span>Local save ready</span><button id="installBtn" class="btn quiet" hidden>Install app</button><button class="btn outline" id="openCloud">☁ Cloud sync</button><button class="btn accent" id="exportBtn">↓ Export CSV</button></div></div>
+</header>
+<main class="container">
+  <section class="intro"><div><div class="eyebrow">BATCH PREP / LIVE AUCTIONS</div><h1>Prep faster. <em>Sell more.</em></h1><p>100 slots, rapid pricing, camera-roll photos, and a Whatnot-ready CSV based on your uploaded template. Everything saves as you work.</p></div><div class="stats"><div><b id="statSlots">100</b><span>SLOTS</span></div><div><b id="statStarted">0</b><span>STARTED</span></div><div><b id="statPhotos">0</b><span>PHOTOS</span></div><div><b id="statAssigned">0</b><span>ASSIGNED</span></div></div></section>
+  <section class="workspace-grid">
+    <aside class="sidebar">
+      <section class="panel"><div class="panel-heading"><div><span class="step">01</span><h2>Bulk actions</h2></div></div>
+      <label for="bulkPrice">Starting price for all slots</label><div class="price-group"><span>$</span><input id="bulkPrice" type="number" min="0" step="0.01" value="5"><button id="priceAll" class="btn accent">PRICE ALL</button></div>
+      <div class="dual"><button id="clearPrices" class="btn quiet">Clear prices</button><button id="fillEmptyTitles" class="btn quiet">Fill blank titles</button></div>
+      <label for="defaultTitle">Default title (optional)</label><input id="defaultTitle" placeholder="Example: Vintage graphic tee"><p class="hint">“Fill blank titles” uses this text. Size buttons add the size to each title.</p>
+      <hr><div class="dual"><button id="addSlots" class="btn quiet">+25 slots</button><button id="resetSlots" class="btn danger-muted">Reset listings</button></div>
+      </section>
+      <section class="panel" id="photoPanel"><div class="panel-heading"><div><span class="step">02</span><h2>Photo tray</h2></div><span id="photoCounter" class="tiny-tag">0 added</span></div>
+        <input id="filePhotos" type="file" accept="image/*" multiple hidden><button class="btn accent wide" id="choosePhotos">＋ Add photos from phone / Mac</button>
+        <p class="hint">Photos are kept in selection order. You never need to rename them.</p>
+        <div class="assign-row"><label for="photosPerItem">Photos per listing</label><select id="photosPerItem"><option value="1">1 each</option><option value="2">2 each</option><option value="3">3 each</option><option value="4">4 each</option><option value="5">5 each</option><option value="6">6 each</option><option value="7">7 each</option><option value="8">8 each</option></select></div>
+        <button id="autoAssign" class="btn wide outline">⇢ Assign photos in order</button>
+        <div class="assign-row"><label for="targetSlot">Or tap a photo to assign to slot</label><input id="targetSlot" type="number" min="1" value="1" style="max-width:78px" aria-label="Slot number for photo tap"></div>
+        <div id="photoTray" class="photo-tray" aria-live="polite"><div class="empty-state">No photos yet. Add a batch to start.</div></div>
+        <p class="hint">Desktop: drag photos onto a slot. Phone: enter a slot number above, then tap a photo. Up to 8 per listing.</p>
+        <div class="dual"><button id="uploadPending" class="btn quiet">☁ Upload photos</button><button id="clearUnassigned" class="btn quiet">Remove unused</button></div><p id="uploadNote" class="hint">Without cloud setup, photos save on this device but cannot appear as public URLs in the CSV.</p>
+      </section>
+      <section class="panel"><div class="panel-heading"><div><span class="step">03</span><h2>Whatnot settings</h2></div></div>
+        <p class="hint important">Use the <strong>exact approved values</strong> from the Values tab of Whatnot's template.</p>
+        <label for="category">Category</label><input id="category" placeholder="Exact Whatnot category">
+        <label for="subCategory">Sub Category</label><input id="subCategory" placeholder="Exact Whatnot subcategory">
+        <div class="two"><div><label for="type">Type</label><select id="type"><option value="Auction">Auction</option><option value="Buy It Now">Buy It Now</option><option value="Giveaway">Giveaway</option></select></div><div><label for="quantity">Quantity</label><input id="quantity" type="number" min="1" step="1" value="1"></div></div>
+        <label for="shippingProfile">Shipping Profile</label><input id="shippingProfile" placeholder="Exact profile from Whatnot">
+        <label for="condition">Condition (if required)</label><input id="condition" placeholder="Exact condition">
+        <div class="two"><div><label for="hazmat">Hazmat</label><select id="hazmat"><option>Not Hazmat</option><option>Hazmat - Standard</option><option>Hazmat - Lithium Battery</option></select></div><div><label for="costPerItem">Cost per item (optional)</label><input id="costPerItem" type="number" min="0" step="0.01" placeholder="0.00"></div></div>
+        <label class="checkbox"><input id="offerable" type="checkbox"> Allow offers (Buy It Now)</label>
+        <button class="btn wide quiet" id="downloadBackup">↓ Download backup JSON</button>
+        <input type="file" id="restoreBackupFile" accept=".json,application/json" hidden><button class="btn wide quiet" id="restoreBackup">↑ Restore backup JSON</button>
+      </section>
+    </aside>
+    <section class="main-panel panel" id="listingsSection">
+      <div class="listing-heading"><div><span class="step">04</span><h2>Listings <small id="listingsSubtitle">100 slots ready</small></h2></div><div class="filter-tools"><label class="sr-only" for="searchListings">Search listings</label><input id="searchListings" type="search" placeholder="Search title / SKU"><select id="filterListings" aria-label="Filter listings"><option value="all">All slots</option><option value="started">Started</option><option value="empty">Blank</option><option value="photos">With photos</option></select></div></div>
+      <div class="helper-bar"><div><b>Fast flow:</b> type a title, tap a size, set a price, add photos. Everything autosaves.</div><button class="link-button" id="jumpToPhotos">↑ Photo tray</button></div>
+      <div id="listings" class="listings"></div>
+    </section>
+  </section>
+  <footer>FUSE PREP v3 · Built from the exact uploaded 21-column Whatnot CSV header · Independent tool, not affiliated with Whatnot</footer>
+</main>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<dialog id="cloudDialog" class="modal"><div class="modal-head"><div><span class="eyebrow">OPTIONAL / FREE-TIER CLOUD</span><h2>Sync between phone and Mac</h2></div><button id="closeCloud" class="close" aria-label="Close">×</button></div>
+  <div id="cloudLoggedOut"><p class="modal-desc">Fuse Prep works locally right now. To sync listings and host pictures as public Whatnot image links, connect your own free Supabase project.</p>
+    <details id="cloudConfigDetails"><summary>1. Add Supabase project connection</summary><div class="modal-fields"><label>Project URL</label><input id="sbUrl" placeholder="https://xxxx.supabase.co" autocomplete="off"><label>Publishable / anon API key</label><input id="sbKey" placeholder="sb_publishable_… or eyJ…" autocomplete="off"><button id="saveCloudConfig" class="btn accent">Save connection</button><small>Use only the public/publishable key. <b>NEVER</b> paste your service_role or secret key here.</small></div></details>
+    <div class="modal-fields"><h3>2. Sign in on both devices</h3><label for="cloudEmail">Email</label><input id="cloudEmail" type="email" placeholder="you@example.com" autocomplete="email"><label for="cloudPassword">Password</label><input id="cloudPassword" type="password" placeholder="8+ characters" autocomplete="current-password"><div class="dual"><button id="cloudSignIn" class="btn accent">Sign in</button><button id="cloudSignUp" class="btn outline">Create account</button></div></div>
+  </div>
+  <div id="cloudLoggedIn" hidden><p id="cloudUser" class="modal-desc"></p><p class="hint">Cloud autosave is enabled while you're signed in. Public photo hosting is enabled when your Supabase Storage bucket has been set up.</p><div class="dual"><button id="cloudSaveNow" class="btn accent">Sync now</button><button id="cloudSignOut" class="btn outline">Sign out</button></div><div class="dual"><button id="cloudDownload" class="btn quiet">Load cloud workspace</button><button id="cloudUpload" class="btn quiet">Replace cloud with this device</button></div></div>
+  <p id="cloudMessage" class="notice" role="status"></p><a href="./SETUP.html" target="_blank" rel="noopener">Open simple setup guide →</a>
+</dialog>
+<dialog id="exportDialog" class="modal"><div class="modal-head"><h2>Export your Whatnot CSV</h2><button class="close" id="closeExport" aria-label="Close">×</button></div><p id="exportOverview"></p><div id="exportIssues" class="issue-list"></div><label class="checkbox"><input id="excludeLocalPhotos" type="checkbox"> Export without local-only photos (they won't appear in Whatnot)</label><div class="dual"><button class="btn accent" id="confirmExport">Download CSV</button><button class="btn outline" id="closeExportSecondary">Cancel</button></div></dialog>
+<script type="module" src="./app.js"></script>
+</body>
+</html>
